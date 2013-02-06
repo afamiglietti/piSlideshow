@@ -53,7 +53,16 @@ class image_display:
         for image in image_array:
             picture = pygame.image.load('/home/pi/images/' + image)
             main_surface = pygame.display.get_surface()
-            main_surface.blit(picture, (0,0))
+            self.screen.fill((0,0,0))
+            x, y = picture.get_size()
+            if x > y:
+                new_x = 1360
+                new_y = 1360*y/x
+            else:
+                new_x = 768*x/y
+                new_y = 768
+            scaled_picture = pygame.transform.smoothscale(picture, (new_x, new_y))
+            main_surface.blit(scaled_picture, (0,0))
             # Update the display
             pygame.display.update()
             time.sleep(sleep_time)
